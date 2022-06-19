@@ -1,7 +1,9 @@
-
+import {Hero} from '../components'
 
 export const Home = () => {
   return (
-    <div className="text-white">Home</div>
+    <div>
+      <Hero />
+    </div>
   )
 }
