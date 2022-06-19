@@ -1,6 +1,6 @@
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
-const BASE_URL = 'https://api.themoviedb.org/3/'
+export const BASE_URL = 'https://api.themoviedb.org/3/'
 
 export const URL_PATHS = {
     popular: `movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=1`,
