@@ -1,5 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
+
+// Add Server State Provider
+import { AuthProvider } from "./context/auth-context/AuthProvider";
+
 // Components Import
 import { Navbar } from "./components";
 
@@ -10,16 +14,18 @@ function App() {
 	const queryClient = new QueryClient();
 
 	return (
-		<Router>
-			<QueryClientProvider client={queryClient}>
-				<Navbar />
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path='/signup' element={<Signup />} />
-					<Route path='/login' element={<Login />} />
-				</Routes>
-			</QueryClientProvider>
-		</Router>
+		<QueryClientProvider client={queryClient}>
+			<AuthProvider>
+				<Router>
+					<Navbar />
+					<Routes>
+						<Route path="/" element={<Home />} />
+						<Route path="/signup" element={<Signup />} />
+						<Route path="/login" element={<Login />} />
+					</Routes>
+				</Router>
+			</AuthProvider>
+		</QueryClientProvider>
 	);
 }
 
