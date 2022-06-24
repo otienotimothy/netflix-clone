@@ -1,6 +1,16 @@
+import { useState } from 'react'
 import { Link } from "react-router-dom";
 
 export const Signup = () => {
+
+	const [formData, setFormData] = useState({
+		email: "",
+		password: ""
+	})
+
+	const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value})
+
+
 	return (
 		<div className="w-full h-screen">
 			<img
@@ -17,16 +27,18 @@ export const Signup = () => {
 							<input
 								className="p-3 my-2 bg-gray-700 rounded"
 								type="email"
-								name=""
-								id=""
+								name="email"
+								value={formData.email}
 								placeholder="Email"
+								onChange={handleChange}
 							/>
 							<input
 								className="p-3 my-2 bg-gray-700 rounded"
 								type="password"
-								name=""
-								id=""
+								name="password"
+								value={formData.password}
 								placeholder="Password"
+								onChange={handleChange}
 							/>
 							<button className="bg-red-600 py-3 my-6 rounded font-bold">
 								Sign Up

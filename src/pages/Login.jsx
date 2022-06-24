@@ -1,6 +1,22 @@
+import { useState } from "react"
 import { Link } from "react-router-dom";
+import {  useAuth } from '../context/auth-context/AuthProvider'
 
 export const Login = () => {
+
+	const { login } = useAuth()
+
+	const [formData, setFormData] = useState({
+		email: "",
+		password: ""
+	})
+
+	const [error, setError] = useState('')
+
+	const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value})
+
+
+
 	return (
 		<div className="w-full h-screen">
 			<img
@@ -17,15 +33,17 @@ export const Login = () => {
 							<input
 								className="p-3 my-2 bg-gray-700 rounded"
 								type="email"
-								name=""
-								id=""
+								name="email"
+								value={formData.email}
+								onChange={handleChange}
 								placeholder="Email"
 							/>
 							<input
 								className="p-3 my-2 bg-gray-700 rounded"
 								type="password"
-								name=""
-								id=""
+								name="password"
+								value={fomData.password}
+								onChange={handleChange}
 								placeholder="Password"
 							/>
 							<button className="bg-red-600 py-3 my-6 rounded font-bold">
