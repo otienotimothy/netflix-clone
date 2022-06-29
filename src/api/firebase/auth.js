@@ -1,25 +1,20 @@
-import { async } from '@firebase/util'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { auth } from './config'
+import {
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+	signOut
+} from "firebase/auth";
+import { auth } from "./config";
 
-export const signup = async (email, password) => {
-    try {
-        let userCredential = await createUserWithEmailAndPassword(auth, email, password)
-        return userCredential.user
-    } catch (error) {
-        return error.message
-    }
-}
+export const signup = (formData) => {
+	const { email, password } = formData;
+	return createUserWithEmailAndPassword(auth, email, password);
+};
 
-export const login = async (email, password) => {
-    try {
-        let userCredential = await signInWithEmailAndPassword(auth, email, password)
-        return userCredential.user
-    } catch (error) {
-        return error.message   
-    }
-}
+export const login = (formData) => {
+	const { email, password } = formData;
+	return signInWithEmailAndPassword(auth, email, password);
+};
 
-export const logout = async () => {
-    await signOut(auth)
-}
+export const logout = () => {
+	return signOut(auth);
+};
