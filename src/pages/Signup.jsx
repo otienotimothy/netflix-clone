@@ -1,14 +1,28 @@
-import { useState } from 'react'
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useMutation } from "react-query";
+
+import { useAuth } from "../context/auth-context/AuthProvider";
 
 export const Signup = () => {
+	const { signup } = useAuth();
 
 	const [formData, setFormData] = useState({
 		email: "",
 		password: ""
-	})
+	});
 
-	const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value})
+	const handleChange = (e) =>
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+
+	const { isLoading, isError, error, mutate } = useMutation((formData) => signup(formData)
+	);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(formData)
+		mutate(formData);
+	};
 
 
 	return (
@@ -23,7 +37,10 @@ export const Signup = () => {
 				<div className="max-w-[450px] h-[500px] mx-auto bg-black/75 text-white">
 					<div className="max-w-[320px] mx-auto py-16">
 						<h1 className="text-3xl font-bold">Sign Up</h1>
-						<form className="w-full flex flex-col py-4">
+						{isError ? (
+							<p className="my-2 p-3 bg-red-400"> {error.message} </p>
+						) : null}
+						<form onSubmit={handleSubmit} className="w-full flex flex-col py-4">
 							<input
 								className="p-3 my-2 bg-gray-700 rounded"
 								type="email"
@@ -40,8 +57,8 @@ export const Signup = () => {
 								placeholder="Password"
 								onChange={handleChange}
 							/>
-							<button className="bg-red-600 py-3 my-6 rounded font-bold">
-								Sign Up
+							<button disabled={isLoading} className="bg-red-600 py-3 my-6 rounded font-bold">
+								{isLoading ? <span> Loading... </span> : <span>Sign Up</span>}
 							</button>
 						</form>
 						<div className="flex justify-between items-center text-sm text-gray-600">

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link } from "react-router-dom";
+import { useMutation } from 'react-query';
 import {  useAuth } from '../context/auth-context/AuthProvider'
 
 export const Login = () => {
@@ -11,11 +12,16 @@ export const Login = () => {
 		password: ""
 	})
 
-	const [error, setError] = useState('')
+	const {email, password} = formData
 
 	const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value})
 
+	const { isError, isLoading, error, mutate } = useMutation((formData) => login(formData))
 
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		mutate(formData)
+	}
 
 	return (
 		<div className="w-full h-screen">
@@ -29,12 +35,13 @@ export const Login = () => {
 				<div className="max-w-[450px] h-[500px] mx-auto bg-black/75 text-white">
 					<div className="max-w-[320px] mx-auto py-16">
 						<h1 className="text-3xl font-bold">Login</h1>
-						<form className="w-full flex flex-col py-4">
+						{isError ? <p className="my-2 p-3 bg-red-400"> {error.message} </p> : null}
+						<form onSubmit={handleSubmit} className="w-full flex flex-col py-4">
 							<input
 								className="p-3 my-2 bg-gray-700 rounded"
 								type="email"
 								name="email"
-								value={formData.email}
+								value={email}
 								onChange={handleChange}
 								placeholder="Email"
 							/>
@@ -42,12 +49,12 @@ export const Login = () => {
 								className="p-3 my-2 bg-gray-700 rounded"
 								type="password"
 								name="password"
-								value={fomData.password}
+								value={password}
 								onChange={handleChange}
 								placeholder="Password"
 							/>
-							<button className="bg-red-600 py-3 my-6 rounded font-bold">
-								Login
+							<button disabled={isLoading} className="bg-red-600 py-3 my-6 rounded font-bold">
+								{isLoading ? <span>Loading...</span> : <span> Login </span> }
 							</button>
 						</form>
 						<div className="flex justify-between items-center text-sm text-gray-600">
