@@ -8,6 +8,7 @@ import { Home, Signup, Login } from "../pages";
 
 // Route Protector
 import { PrivateRoute } from "./PrivateRoute";
+import { HomeRedirect } from "./HomeRedirect";
 
 export const AppRoutes = () => {
 	return (
@@ -22,8 +23,22 @@ export const AppRoutes = () => {
 						</PrivateRoute>
 					}
 				/>
-				<Route path="/signup" element={<Signup />} />
-				<Route path="/login" element={<Login />} />
+				<Route
+					path="/signup"
+					element={
+						<HomeRedirect>
+							<Signup />
+						</HomeRedirect>
+					}
+				/>
+				<Route
+					path="/login"
+					element={
+						<HomeRedirect>
+							<Login />
+						</HomeRedirect>
+					}
+				/>
 			</Routes>
 		</Router>
 	);
