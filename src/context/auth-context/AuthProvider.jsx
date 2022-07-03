@@ -1,29 +1,14 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { signup, login, logout } from "../../api/firebase/auth";
-import { auth } from "../../api/firebase/config";
+import { createContext, useContext } from "react"
+import { signup, login, logout, checkAuthState } from "../../api/firebase/auth";
+import { useQuery } from 'react-query';
 
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(true)
 
-	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (signedInUser) => {
-			if (signedInUser) {
-				setUser(signedInUser);
-			} else {
-				setUser(null);
-			}
-			setLoading(false)
-		});
-
-		return unsubscribe;
-	}, [user]);
-
+	const { isError, isLoading, error, data } = useQuery('checkUser', checkAuthState, {retry: false})
 
 	return (
 		<AuthContext.Provider
@@ -31,9 +16,10 @@ export const AuthProvider = ({ children }) => {
 				signup,
 				login,
 				logout,
-				user
+				user: data,
+				loading: isLoading
 			}}>
-			{!loading && children}
+			{children}
 		</AuthContext.Provider>
 	);
 };

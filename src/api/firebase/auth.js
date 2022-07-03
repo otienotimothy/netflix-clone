@@ -1,4 +1,5 @@
 import {
+	onAuthStateChanged,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	signOut
@@ -14,6 +15,19 @@ export const login = (formData) => {
 	const { email, password } = formData;
 	return signInWithEmailAndPassword(auth, email, password);
 };
+
+export const checkAuthState = () => {
+	return new Promise((resolve, reject) => {
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				resolve(user)
+			} else {
+				reject(null)
+			}
+		})
+	})
+
+}
 
 export const logout = () => {
 	return signOut(auth);
