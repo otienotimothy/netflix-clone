@@ -1,27 +1,36 @@
-import { useState } from "react"
-import { Link } from "react-router-dom";
-import { useMutation } from 'react-query';
-import {  useAuth } from '../context/auth-context/AuthProvider'
+import { useState } from "react";
+import { Link, useNavigate, Navigate } from "react-router-dom";
+import { useMutation } from "react-query";
+import { useAuth } from "../context/auth-context/AuthProvider";
 
 export const Login = () => {
-
-	const { login } = useAuth()
+	const { login } = useAuth();
 
 	const [formData, setFormData] = useState({
 		email: "",
 		password: ""
-	})
+	});
 
-	const {email, password} = formData
+	const { email, password } = formData;
 
-	const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value})
+	const handleChange = (e) =>
+		setFormData({ ...formData, [e.target.name]: e.target.value });
 
-	const { isError, isLoading, error, mutate } = useMutation((formData) => login(formData))
+	const { isError, isLoading, error, mutate } = useMutation((formData) =>
+		login(formData)
+	);
+
+	const navigate = useNavigate();
 
 	const handleSubmit = (e) => {
-		e.preventDefault()
-		mutate(formData)
-	}
+		e.preventDefault();
+		mutate(formData, {
+			onSuccess: (data, variables, context) => {
+				console.log(data);
+				navigate("/");
+			}
+		});
+	};
 
 	return (
 		<div className="w-full h-screen">
@@ -35,7 +44,9 @@ export const Login = () => {
 				<div className="max-w-[450px] h-[500px] mx-auto bg-black/75 text-white">
 					<div className="max-w-[320px] mx-auto py-16">
 						<h1 className="text-3xl font-bold">Login</h1>
-						{isError ? <p className="my-2 p-3 bg-red-400"> {error.message} </p> : null}
+						{isError ? (
+							<p className="my-2 p-3 bg-red-400"> {error.message} </p>
+						) : null}
 						<form onSubmit={handleSubmit} className="w-full flex flex-col py-4">
 							<input
 								className="p-3 my-2 bg-gray-700 rounded"
@@ -53,8 +64,10 @@ export const Login = () => {
 								onChange={handleChange}
 								placeholder="Password"
 							/>
-							<button disabled={isLoading} className="bg-red-600 py-3 my-6 rounded font-bold">
-								{isLoading ? <span>Loading...</span> : <span> Login </span> }
+							<button
+								disabled={isLoading}
+								className="bg-red-600 py-3 my-6 rounded font-bold">
+								{isLoading ? <span>Loading...</span> : <span> Login </span>}
 							</button>
 						</form>
 						<div className="flex justify-between items-center text-sm text-gray-600">
@@ -74,4 +87,3 @@ export const Login = () => {
 		</div>
 	);
 };
-
