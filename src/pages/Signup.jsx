@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 
 import { useAuth } from "../context/auth-context/AuthProvider";
@@ -15,15 +15,21 @@ export const Signup = () => {
 	const handleChange = (e) =>
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 
-	const { isLoading, isError, error, mutate } = useMutation((formData) => signup(formData)
+	const { isLoading, isError, error, mutate } = useMutation((formData) =>
+		signup(formData)
 	);
+
+	const navigate = useNavigate();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(formData)
-		mutate(formData);
+		mutate(formData, {
+			onSuccess: (data, variables, context) => {
+				console.log(data)
+				navigate("/");
+			}
+		});
 	};
-
 
 	return (
 		<div className="w-full h-screen">
@@ -57,7 +63,9 @@ export const Signup = () => {
 								placeholder="Password"
 								onChange={handleChange}
 							/>
-							<button disabled={isLoading} className="bg-red-600 py-3 my-6 rounded font-bold">
+							<button
+								disabled={isLoading}
+								className="bg-red-600 py-3 my-6 rounded font-bold">
 								{isLoading ? <span> Loading... </span> : <span>Sign Up</span>}
 							</button>
 						</form>
