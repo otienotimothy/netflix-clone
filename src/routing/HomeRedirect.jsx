@@ -5,7 +5,7 @@ export const HomeRedirect = ({ children }) => {
 	const { user, loading } = useAuth();
 
 	if (loading) {
-		return <h1 className="text-3xl text-white"> Loading... </h1>;
+		return <h1 className="absolute top-1/2 left-1/3 text-2xl text-white"> Loading... </h1>;
 	} else if (user) {
 		return <Navigate to="/" />;
 	} else {
