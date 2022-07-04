@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 // Components Import
 import { Navbar } from "../components";
@@ -12,7 +12,7 @@ import { HomeRedirect } from "./HomeRedirect";
 
 export const AppRoutes = () => {
 	return (
-		<Router>
+		<>
 			<Navbar />
 			<Routes>
 				<Route
@@ -40,6 +40,6 @@ export const AppRoutes = () => {
 					}
 				/>
 			</Routes>
-		</Router>
+		</>
 	);
 };

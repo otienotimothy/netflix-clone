@@ -6,7 +6,9 @@ export const HomeRedirect = ({ children }) => {
 
 	if (loading) {
 		return <h1 className="absolute top-1/2 left-1/3 text-2xl text-white"> Loading... </h1>;
-	} else if (user) {
+	} 
+	
+	if (user && !loading) {
 		return <Navigate to="/" />;
 	} else {
 		return children;

@@ -19,6 +19,7 @@ export const login = (formData) => {
 export const checkAuthState = () => {
 	return new Promise((resolve, reject) => {
 		onAuthStateChanged(auth, (user) => {
+			console.log('being called...')
 			if (user) {
 				resolve(user)
 			} else {

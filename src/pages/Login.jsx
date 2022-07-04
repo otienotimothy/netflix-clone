@@ -27,9 +27,10 @@ export const Login = () => {
 		mutate(formData, {
 			onSuccess: (data, variables, context) => {
 				console.log(data);
-				navigate("/");
+				// navigate("/");
 			}
 		});
+		navigate("/");
 	};
 
 	return (
