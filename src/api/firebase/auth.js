@@ -16,20 +16,6 @@ export const login = (formData) => {
 	return signInWithEmailAndPassword(auth, email, password);
 };
 
-export const checkAuthState = () => {
-	return new Promise((resolve, reject) => {
-		onAuthStateChanged(auth, (user) => {
-			console.log('being called...')
-			if (user) {
-				resolve(user)
-			} else {
-				reject(null)
-			}
-		})
-	})
-
-}
-
 export const logout = () => {
 	return signOut(auth);
 };

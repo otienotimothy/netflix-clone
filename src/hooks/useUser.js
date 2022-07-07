@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react"
 import { onAuthStateChanged } from "firebase/auth"
+import { auth } from "../api/firebase/config"
+// import { useMutation } from "react-query"
+// import { signup, login, logout } from "../../api/firebase/auth";
 
 export const useUser = () => {
     const [user, setUser] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
+
+    // const authMutation = (cb) => {
+    //     return useMutation((authData) => cb(authData))
+    // }
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged((user) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if(user){
                 setUser(user)
             }else {
@@ -19,11 +24,8 @@ export const useUser = () => {
 
     }, [user])
 
-    const loginUser = (email, password) => {
-
-    }
-
   return {
-    user
+    user,
+    setUser
   }
 }

@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { useAuth } from "../context/auth-context/AuthProvider";
 
 export const Login = () => {
-	const { login } = useAuth();
+	const { login, setUser } = useAuth();
 
 	const [formData, setFormData] = useState({
 		email: "",
@@ -27,10 +27,10 @@ export const Login = () => {
 		mutate(formData, {
 			onSuccess: (data, variables, context) => {
 				console.log(data);
-				// navigate("/");
+				setUser(data);
+				navigate("/");
 			}
 		});
-		navigate("/");
 	};
 
 	return (

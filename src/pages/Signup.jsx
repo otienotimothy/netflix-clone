@@ -25,7 +25,8 @@ export const Signup = () => {
 		e.preventDefault();
 		mutate(formData, {
 			onSuccess: (data, variables, context) => {
-				console.log(data)
+				console.log(data);
+				setUser(data);
 				navigate("/");
 			}
 		});

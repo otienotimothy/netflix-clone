@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
-import { useQuery, useQueryClient } from "react-query";
-import { Navigate } from "react-router-dom";
-import { signup, login, logout, checkAuthState } from "../../api/firebase/auth";
+// import { useQuery, useQueryClient } from "react-query";
+import { signup, login, logout } from "../../api/firebase/auth";
+import { useUser } from "../../hooks/useUser"
 
 
 const AuthContext = createContext();
@@ -10,20 +10,23 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
 
-	const client = useQueryClient()
+	// const client = useQueryClient()
 
-	const { isError, isLoading, error, data } = useQuery(
-		"checkUser",
-		checkAuthState,
-		{ retry: false }
-	);
+	// const { isError, isLoading, error, data } = useQuery(
+	// 	"checkUser",
+	// 	checkAuthState,
+	// 	{ retry: false }
+	// );
 
-	console.log(data)
+	// console.log(data)
+
+	const {user, setUser} = useUser()
 
 	const logoutUser = () => {
 		console.log('running...')
 		logout();
-		client.invalidateQueries('checkUser')
+		setUser(null)
+		// client.invalidateQueries('checkUser')
 	};
 
 	return (
@@ -32,8 +35,8 @@ export const AuthProvider = ({ children }) => {
 				signup,
 				login,
 				logoutUser,
-				user: data,
-				loading: isLoading
+				setUser,
+				user,
 			}}>
 			{children}
 		</AuthContext.Provider>
