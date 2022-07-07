@@ -19,3 +19,11 @@ export const login = (formData) => {
 export const logout = () => {
 	return signOut(auth);
 };
+
+// export const checkAuthState = () => {
+// 	return new Promise((resolve, reject) => {
+// 		onAuthStateChanged(auth, (user) => {
+// 			resolve(user)
+// 		})
+// 	})
+// }
