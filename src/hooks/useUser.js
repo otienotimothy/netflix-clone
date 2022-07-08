@@ -4,6 +4,7 @@ import { auth } from "../api/firebase/config"
 
 export const useUser = () => {
     const [user, setUser] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -12,6 +13,7 @@ export const useUser = () => {
             }else {
                 setUser(null)
             }
+            setLoading(false)
         })
 
         return unsubscribe
@@ -20,6 +22,7 @@ export const useUser = () => {
 
   return {
     user,
+    loading,
     setUser
   }
 }

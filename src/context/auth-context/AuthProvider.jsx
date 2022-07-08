@@ -1,6 +1,8 @@
 import { createContext, useContext } from "react";
 import { signup, login, logout } from "../../api/firebase/auth";
-import { useUser } from "../../hooks/useUser"
+import { useUser } from "../../hooks/useUser";
+
+import "../../api/firebase/db"
 
 
 const AuthContext = createContext();
@@ -9,7 +11,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
 
-	const {user, setUser} = useUser()
+	const {user, loading, setUser} = useUser()
 
 	const logoutUser = () => {
 		console.log('running...')
@@ -25,6 +27,7 @@ export const AuthProvider = ({ children }) => {
 				logoutUser,
 				setUser,
 				user,
+				loading
 			}}>
 			{children}
 		</AuthContext.Provider>
