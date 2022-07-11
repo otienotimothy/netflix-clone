@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { Navbar } from "../components";
 
 // Pages Import
-import { Home, Signup, Login } from "../pages";
+import { Home, Signup, Login, NetflixDetails } from "../pages";
 
 // Route Protector
 import { PrivateRoute } from "./PrivateRoute";
@@ -23,6 +23,7 @@ export const AppRoutes = () => {
 						</PrivateRoute>
 					}
 				/>
+				<Route path="/details" element={<NetflixDetails />} />
 				<Route
 					path="/signup"
 					element={
