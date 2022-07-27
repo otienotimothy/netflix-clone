@@ -2,8 +2,6 @@ import { createContext, useContext } from "react";
 import { signup, login, logout } from "../../api/firebase/auth";
 import { useUser } from "../../hooks/useUser";
 
-import "../../api/firebase/db"
-
 
 const AuthContext = createContext();
 
